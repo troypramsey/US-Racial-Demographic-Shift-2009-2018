@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 config.js
 .DS_Store
+UODataClass
+config.py
