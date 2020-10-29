@@ -1,8 +1,20 @@
 from flask import Flask, jsonify, request
-from flask.ext.pymongo import pymongo
+from pymongo import MongoClient
 
 app = Flask(__name__)
 
-app.config['']
+mongo = MongoClient('mongodb+srv://dbadmin:GroupProject2@groupproject2.ocbpa.mongodb.net/sample_airbnb?retryWrites=true&w=majority')
 
-# https://www.youtube.com/watch?v=upGiAG7-Sa4
+@app.route('/framework', methods=['GET'])
+def get_all_frameworks():
+    framework = mongo.db.framework
+
+    output = []
+
+    for q in framework.find():
+        output.append({'name' : q[name]})
+
+    return jsonify({'result' : output})
+
+if __name__ == '__main__':
+    app.run(debug=True)
