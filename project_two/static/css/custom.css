@@ -94,3 +94,14 @@ footer {
     .navbar-brand {
   margin-left: 10px;
   }
+
+#tooltip {
+  height: 60px;
+  width: 200px;
+  font: 16px sans-serif;
+  pointer-events: none;
+  background: #fafafa;
+  border: 0px;
+  border-radius: 8px;
+  padding: 2px;
+}
