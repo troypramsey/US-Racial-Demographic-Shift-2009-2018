@@ -29,3 +29,5 @@ let selections = dropdown.selectAll('option')
     .attr('value', d => d)
     .attr('class', 'year')
     .text(d => d)
+//D3 to build selection for states
+let 
