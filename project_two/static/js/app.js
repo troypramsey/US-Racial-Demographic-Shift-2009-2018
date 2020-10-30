@@ -41,8 +41,8 @@ dropdown.on('change', function() {
 // Select the map object
 let svg = d3.select('#map')
     .append('svg')
-    .attr('height', height)
-    .attr('width', width)
+    .attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox", `0 0 ${width} ${height}`)
 
 // DRAW MAP FUNCTION
 // Pass in year from dropdown
@@ -88,7 +88,7 @@ function drawMap(year) {
 
         // Map projection object
         let projection = d3.geoAlbersUsa()
-        .translate([width/2, height/2])
+        // .translate([width/2, height/2])
         .scale(1000)
 
         // Path constructor takes in county and state data from TopoJSON object
