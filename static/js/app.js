@@ -2,20 +2,20 @@
 let height = 500, width = 800
 
 // DROPDOWN
-// Values for building dropdown
-let years = [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
-
+// Values for building map dropdown
 // Default year on page initialization
 let defaultOption = 2009
 
-// D3 to build dropdown
-let dropdown = d3.select('#dropdown-container')
+let years = [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
+
+// D3 to build map dropdown
+const mapDropdown = d3.select('#dropdown-container')
     .append('select')
-    .classed('form-control form-control-lg', true)
+    .classed('form-inline form-control-lg', true)
     .attr('id', 'dropdown')
 
 // D3 to build selection for each year
-let selections = dropdown.selectAll('option')
+let mapSelections = mapDropdown.selectAll('option')
     .data(years)
     .join('option')
     .attr('value', d => d)
@@ -26,8 +26,8 @@ let selections = dropdown.selectAll('option')
 drawMap(defaultOption)
 
 // Event listener for change in year
-dropdown.on('change', function() {
-    year = dropdown.node().value
+mapDropdown.on('change', function() {
+    year = mapDropdown.node().value
     drawMap(year)
 })
 
@@ -44,12 +44,6 @@ function drawMap(year) {
     // TopoJSON object data
     d3.json('../static/js/us.json').then(data => {
     let mapData = data
-
-    // Build data query using selected year
-
-    // dataQuery = /by_year/${year}
-
-    // let dataQuery = 'http://127.0.0.1:5000/by_year/' + year + '/'
 
     // Use query to pull in population data
     d3.json(`/by_year/${year}`).then(data => {

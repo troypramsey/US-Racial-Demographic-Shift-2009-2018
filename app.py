@@ -15,6 +15,10 @@ collection = db['json_data']
 def index():
     return render_template('index_map_debug.html')
 
+@app.route("/api")
+def api():
+    return render_template('data_map_debug.html')
+
 @app.route('/by_year/<year>', methods=['GET'])
 def year(year):
     results = list(collection.find({'year':int(year)}))

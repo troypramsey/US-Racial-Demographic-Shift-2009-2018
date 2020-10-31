@@ -15,16 +15,12 @@
 <body>
   <section>
       <nav class="navbar navbar-expand- navbar-light bg-light mynav">
-        <a class="navbar-brand" href="#">Demographic Drift</a>
-           <ul class="nav-justify-content-right">
+        <a class="navbar-brand" href={{ url_for('index') }}>Demographic Drift</a>
+           <ul class='justify-content-between' style="list-style-type:none;">
              <li class="nav-item">
-                <a class="nav-link active" href="data.html">Data</a>
-            </li>
-            <li class="nav-item">
-              <div id='dropdown-container'></div>
+                <a class="nav-link active" href={{ url_for('api') }}>API</a>
             </li>
           </ul>
-        
        </nav>
     </section>
 
@@ -45,11 +41,11 @@
             <div id="map"></div>
           </div>
           <div class="col-3 card" id='card-container' style='border-left: 1px solid #FAFAFA'>
-            <!-- <div class="card"> -->
-              <div class="card-body" id='county-card'>
+            <div class='card-title'><div id='dropdown-container'></div>
+            </div>
+            <div class="card-body" id='county-card'>
                 Select a county to see detailed demographic info
-              </div>
-            <!-- </div> -->
+            </div>
           </div>
         </div>
 
@@ -78,7 +74,7 @@
       </div>
    </section>
 
-   <footer>
+   <footer class='fixed-footer'>
      <div class="row text-center text-light">
         <div class="col-md-4 smed">
             <a href="https://www.facebook.com/uscensusbureau/" target="_blank"><i class="fab fa-facebook-square"></i></a>
@@ -95,6 +91,7 @@
    </footer>
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js'></script>
    <script src="https://unpkg.com/topojson@3"></script>
    <script src='../static/js/app.js'></script>
   </body>
