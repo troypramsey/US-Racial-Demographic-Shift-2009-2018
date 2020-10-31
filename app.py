@@ -1,12 +1,19 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from pymongo import MongoClient
 from bson.json_util import dumps
+from flask_cors import CORS
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+CORS(app)
 
 mongo = MongoClient('mongodb+srv://readuser:readpassword@groupproject2.ocbpa.mongodb.net/test?retryWrites=true&w=majority')
 db = mongo['static']
 collection = db['json_data']
+
+@app.route("/")
+def index():
+    return render_template('index_map_debug.html')
 
 @app.route('/by_year/<year>', methods=['GET'])
 def year(year):
