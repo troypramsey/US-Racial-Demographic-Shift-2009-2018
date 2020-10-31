@@ -131,3 +131,4 @@ config.js
 .DS_Store
 UODataClass
 config.py
+.vscode
