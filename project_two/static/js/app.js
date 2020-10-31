@@ -1,12 +1,5 @@
 // Map size/margin values
-let height = 800, width = 1000
-
-let margin = {
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0
-}
+let height = 500, width = 800
 
 // DROPDOWN
 // Values for building dropdown
@@ -38,11 +31,12 @@ dropdown.on('change', function() {
     drawMap(year)
 })
 
-// Select the map object
+// Draw responsive canvas
 let svg = d3.select('#map')
     .append('svg')
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox", `0 0 ${width} ${height}`)
+    .attr('style', 'background-color: #4F4F4F;')
 
 // DRAW MAP FUNCTION
 // Pass in year from dropdown
@@ -67,7 +61,7 @@ function drawMap(year) {
         let tooltip = d3.select('body')
         .append('div')
         .attr('id', 'tooltip')
-        .attr('style', 'position: absolute; visibility: hidden; background: #4F4F4F; padding: 2px; text-align: center; width: 200px; color: #FAFAFA; opacity: 0.8; border-radius: 10px;')
+        .attr('style', 'position: absolute; visibility: hidden; background: #4F4F4F; padding: 2px; text-align: center; width: 200px; color: #FAFAFA; opacity: 0.8; border-radius: 10px; border: .5px solid #FAFAFA')
 
         // County card displays static county information on click
         let countyCard = d3.select('#county-card')
@@ -88,7 +82,7 @@ function drawMap(year) {
 
         // Map projection object
         let projection = d3.geoAlbersUsa()
-        // .translate([width/2, height/2])
+        .translate([width/2, height/2])
         .scale(1000)
 
         // Path constructor takes in county and state data from TopoJSON object
@@ -184,7 +178,7 @@ function drawMap(year) {
                     asian = 'Unknown'
                 }
 
-                countyCard.html(year + '<br>' + '<h3>' + name + ', ' + stateName + '</h3><br>Nonwhite: ' + percentage + '%<br>' + 'Black: ' + black + '%<br>' + 'Hispanic or Latino: ' + latinx + '%<br>' + 'Native American: ' + native + '%<br>' + 'Asian-American: ' + asian + '%')
+                countyCard.html('<h3>' + name + ', ' + stateName + '</h3><br>Nonwhite: ' + percentage + '%<br>' + 'Black: ' + black + '%<br>' + 'Hispanic or Latino: ' + latinx + '%<br>' + 'Native American: ' + native + '%<br>' + 'Asian-American: ' + asian + '%')
             })
             
             // Draws state borders on top of county map

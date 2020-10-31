@@ -60,13 +60,28 @@ body{
 }
 
 .state {
-  stroke-width: .5;
+  stroke-width: 1;
   stroke: black;
 }
-/* 
-.state:hover {
-} */
 
+.county {
+  stroke-width: .25;
+  stroke: black;
+}
+
+.county:hover {
+  opacity: 0.5;
+}
+
+#county-card {
+  background-color: #4F4F4F;
+  color: #FAFAFA;
+}
+
+.card {
+  background-color: #4F4F4F;
+  border-radius: 0px;
+}
 
 
 /* Footer */
