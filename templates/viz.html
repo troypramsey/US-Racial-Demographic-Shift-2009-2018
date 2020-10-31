@@ -21,9 +21,9 @@
                 <a class="nav-link active" href="index.html">Home</a>
                 <a class="nav-link active" href="data.html">Data</a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <div id='dropdown-container'></div>
-              </li>
+              </li> -->
             </ul>
         </nav>
     </section>
@@ -35,7 +35,7 @@
               <p class="text-center">
                 Explore the data...
               </p>
-              <div id="area"></div>     
+              <div id="plot"></div>     
           </div>
         </div>
     </section>
@@ -48,18 +48,17 @@
               <div class="panel panel-default">
                 <div class="panel-heading">Filter Search</div>
                 <div class="panel-body">
-                  <div class="form-group">
-                    <ul class="list-group" id="filters">
-                      <!-- <li class="filter list-group-item">
-                        <label for="year">Enter a year (2009-2018)</label>
-                        <input class="form-control" id="datetime" type="text" placeholder="2009">
-                      </li> -->
-                      <li class="filter list-group-item">
-                        <label for="state">Enter a State</label>
-                        <input class="form-control" id="state" type="text" placeholder="OR">
-                      </li>
-                    </ul>
-                  </div>
+                  <form>
+                    <div class="form-group">
+                      <ul class="list-group" id="filters">
+                        <li class="filter list-group-item">
+                          <label for="state">Enter a State</label>
+                          <input class="form-control" id="state" type="text" placeholder="or">
+                        </li>
+                      </ul>
+                    </div>
+                    <button id="filter-btn" type="button" class="btn btn-default">Filter Table</button>
+                  </form>
                 </div>
               </div>
             </aside>
@@ -96,10 +95,9 @@
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="./static/js/app.js"></script>
     <script src="./static/js/areaChart.js"></script>
     <script src="census2009.json"></script>
-    <script src="census2010.json"></script>
+    <!-- <script src="census2010.json"></script>
     <script src="census2011.json"></script>
     <script src="census2012.json"></script>
     <script src="census2013.json"></script>
@@ -107,6 +105,6 @@
     <script src="census2015.json"></script>
     <script src="census2016.json"></script>
     <script src="census2017.json"></script>
-    <script src="census2018.json"></script>
+    <script src="census2018.json"></script> -->
 </body>
 </html>

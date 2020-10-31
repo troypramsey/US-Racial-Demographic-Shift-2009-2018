@@ -6,8 +6,9 @@ body{
 /* Navbar Decoration */
 
 .mynav {
-  background-image: url(img/social.jpg);
-  background-size: cover;
+  background-image: url('../img/social.jpg');
+  background-color: blue;
+  /* background-size: cover; */
 
   }
 
@@ -24,10 +25,10 @@ body{
 
 }
 
-.mynav a:hover {
+/* .mynav a:hover {
   background-color: #a38f74;
 
-}
+} */
 
 .active a {
   border-bottom: 2px solid #a38f74;
@@ -55,6 +56,33 @@ body{
     padding: 70px 0px;
 }
 
+#map {
+  height: 100%;
+}
+
+.state {
+  stroke-width: 1;
+  stroke: black;
+}
+
+.county {
+  stroke-width: .25;
+  stroke: black;
+}
+
+.county:hover {
+  opacity: 0.5;
+}
+
+#county-card {
+  background-color: #4F4F4F;
+  color: #FAFAFA;
+}
+
+.card {
+  background-color: #4F4F4F;
+  border-radius: 0px;
+}
 
 
 /* Footer */
@@ -82,4 +110,17 @@ footer {
     .navbar-brand {
   margin-left: 10px;
   }
+<<<<<<< HEAD:project_two/custom.css
+=======
+
+#tooltip {
+  height: 60px;
+  width: 200px;
+  font: 16px sans-serif;
+  pointer-events: none;
+  background: #fafafa;
+  border: 0px;
+  border-radius: 8px;
+  padding: 2px;
+>>>>>>> b9732372b9689c6155e0dbb63ba823c27aae7af4:static/css/custom.css
 }
