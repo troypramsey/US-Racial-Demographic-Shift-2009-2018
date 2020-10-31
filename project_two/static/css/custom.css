@@ -6,8 +6,9 @@ body{
 /* Navbar Decoration */
 
 .mynav {
-  background-image: url(../../img/social.jpg);
-  background-size: cover;
+  background-image: url('../../img/social.jpg');
+  background-color: blue;
+  /* background-size: cover; */
 
   }
 
@@ -24,10 +25,10 @@ body{
 
 }
 
-.mynav a:hover {
+/* .mynav a:hover {
   background-color: #a38f74;
 
-}
+} */
 
 .active a {
   border-bottom: 2px solid #a38f74;
