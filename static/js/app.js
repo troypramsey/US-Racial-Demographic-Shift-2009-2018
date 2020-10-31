@@ -3,10 +3,12 @@ let height = 500, width = 800
 
 // DROPDOWN
 // Values for building dropdown
-let years = [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
+// let years = [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
+let years = [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
 
 // Default year on page initialization
-let defaultOption = 2009
+// let defaultOption = 2009
+let defaultOption = 2011
 
 // D3 to build dropdown
 let dropdown = d3.select('#dropdown-container')
@@ -42,7 +44,8 @@ let svg = d3.select('#map')
 // Pass in year from dropdown
 function drawMap(year) {
     // TopoJSON object data
-    d3.json('../static/js/us.json').then(data => {
+    // d3.json('../static/js/us.json').then(data => {
+    d3.json('../static/js/zip_us.json').then(data => {
     let mapData = data
 
     // Build data query using selected year
@@ -52,7 +55,8 @@ function drawMap(year) {
     // let dataQuery = 'http://127.0.0.1:5000/by_year/' + year + '/'
 
     // Use query to pull in population data
-    d3.json(`/by_year/${year}`).then(data => {
+    // d3.json(`/by_year/${year}`).then(data => {
+    d3.json(`/by_zip_year/${year}`).then(data => {
         
         let popData = data
 
