@@ -1,20 +1,19 @@
-// purpose of this js file is to use plotly to make static graphs / charts of the data
-d3.json('./data/census2009.json').then(counties => {
-    // window.buttonData = buttonData;
-    console.log(counties);
-});
+// DROPDOWN
+// Values for building dropdown
+let years = [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
 
-// set dimentions and margins
-// reference for area plot: https://www.d3-graph-gallery.com/graph/area_basic.html
-var margin = {top: 10, right: 30, bottom: 30, left: 50},
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+// D3 to build dropdown
+let dropdown = d3.select('#dropdown-container')
+    .append('select')
+    .classed('form-control form-control-lg', true)
+    .attr('id', 'dropdown')
 
-// append the svg object
-var svg = d3.select("#area")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top +")");
+// D3 to build selection for each year
+let selections = dropdown.selectAll('option')
+    .data(years)
+    .join('option')
+    .attr('value', d => d)
+    .attr('class', 'year')
+    .text(d => d)
+
 
