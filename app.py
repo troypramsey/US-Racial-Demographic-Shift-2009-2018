@@ -10,7 +10,6 @@ CORS(app)
 mongo = MongoClient('mongodb+srv://readuser:readpassword@groupproject2.ocbpa.mongodb.net/test?retryWrites=true&w=majority')
 db = mongo['static']
 collection = db['json_data']
-zip_collection = db['zip_json_data']
 
 @app.route("/")
 def index():
@@ -26,9 +25,9 @@ def state_name(state_name):
     results = list(collection.find({'state_name': state_name}))
     return app.response_class(dumps(results), mimetype="application/json")
 
-@app.route('/by_zip_year/<year>', methods=['GET'])
-def zip_year(year):
-    results = list(collection.find({'year': int(year)}))
+@app.route('/by_state_year/<state_name>/<year>', methods=['GET'])
+def state_year(state_name=None, year=None):
+    results = list(collection.find({'state_name': state_name, 'year': int(year)}))
     return app.response_class(dumps(results), mimetype="application/json")
     
 if __name__ == '__main__':

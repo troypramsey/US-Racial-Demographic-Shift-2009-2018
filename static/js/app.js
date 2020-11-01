@@ -99,24 +99,25 @@ function drawMap(year) {
             .projection(projection)
 
             // County borders from TopoJSON
-        let counties = topojson.feature(mapData, mapData.objects.counties).features
+        // let counties = topojson.feature(mapData, mapData.objects.counties).features
         // State borders from TopoJSON
-        let states = topojson.feature(mapData, mapData.objects.states).features
+        // let states = topojson.feature(mapData, mapData.objects.states).features
+        let zipcodes = topojson.feature(mapData, mapData.objects.zip_codes_for_the_usa).features
     
         // D3 binds data from population datasets to TopoJSON polygons
-        svg.selectAll('.county')
-        .data(counties)
+        svg.selectAll('.zip_codes_for_the_usa')
+        .data(zipcodes)
         .join('path')
-        .classed('county', true)
+        .classed('zipcode', true)
         .attr('d', path)
         .attr('fill', function(d) {
             let id = d.id
-            let county = popData.find((item) => {
+            let zipcode = popData.find((item) => {
                 return item.fips === id
             })
             let percentage
             try {
-                percentage = county['nonwhite_pct']
+                percentage = zipcode['nonwhite_pct']
             }
             catch (err) {
                 percentage = 1
@@ -124,61 +125,61 @@ function drawMap(year) {
             return color(percentage)
         })
         // Unhides tooltip on mouseover
-        .on('mouseover', function(countyItem)  {
-            tooltip.transition()
-                .style('visibility', 'visible')
-                .style('left', (d3.event.pageX+40) + 'px')
-                .style('top', (d3.event.pageY -28) + 'px')
-            let fips = countyItem.id
-            let county = popData.find((item) => {
-                return item.fips === fips
-            })
-            let name, percentage
-            try {
-                name = county.county_name
-                stateName = county.state_name
-            }
-            catch (err) {
-                name = 'Data Missing From Census'
-                stateName = 'Unknown'
-            }
+        // .on('mouseover', function(countyItem)  {
+        //     tooltip.transition()
+        //         .style('visibility', 'visible')
+        //         .style('left', (d3.event.pageX+40) + 'px')
+        //         .style('top', (d3.event.pageY -28) + 'px')
+        //     let fips = countyItem.id
+        //     let county = popData.find((item) => {
+        //         return item.fips === fips
+        //     })
+        //     let name, percentage
+        //     try {
+        //         name = county.county_name
+        //         stateName = county.state_name
+        //     }
+        //     catch (err) {
+        //         name = 'Data Missing From Census'
+        //         stateName = 'Unknown'
+        //     }
 
-            tooltip.html(name + ', ' + stateName)
-        })
-        // Re-hides tooltip on mouseout
-        .on('mouseout', function (countyItem)  {
-            tooltip.transition()
-                .style('visibility', 'hidden')
+        //     tooltip.html(name + ', ' + stateName)
+        // })
+        // // Re-hides tooltip on mouseout
+        // .on('mouseout', function (countyItem)  {
+        //     tooltip.transition()
+        //         .style('visibility', 'hidden')
 
                 
-        })
-        // Updates information in card on click
-        .on('click', function(countyItem)  {
+        // })
+        // // Updates information in card on click
+        // .on('click', function(countyItem)  {
             
-            let fips = countyItem.id
-            let county = popData.find((item) => {
-                return item.fips === fips
-            })
-            let name, percentage
-            try {
-                name = county.county_name
-                percentage = county.nonwhite_pct
-                black = county.black_pct
-                latinx = county.latinx_pct
-                native = county.native_pct
-                asian = county.asian_pct
-            }
-            catch (err) {
-                name = 'Data Missing From Census'
-                percentage = 'Unknown'
-                black = 'Unknown'
-                latinx = 'Unknown'
-                native = 'Unknown'
-                asian = 'Unknown'
-            }
+        //     let fips = countyItem.id
+        //     let county = popData.find((item) => {
+        //         return item.fips === fips
+        //     })
+        //     let name, percentage
+        //     try {
+        //         name = county.county_name
+        //         percentage = county.nonwhite_pct
+        //         black = county.black_pct
+        //         latinx = county.latinx_pct
+        //         native = county.native_pct
+        //         asian = county.asian_pct
+        //     }
+        //     catch (err) {
+        //         name = 'Data Missing From Census'
+        //         percentage = 'Unknown'
+        //         black = 'Unknown'
+        //         latinx = 'Unknown'
+        //         native = 'Unknown'
+        //         asian = 'Unknown'
+        //     }
 
-            countyCard.html('<h3>' + name + ', ' + stateName + '</h3><br><h5>Nonwhite: ' + percentage + '%</h5><br>' + '- Black: ' + black + '%<br>' + '- Hispanic or Latino: ' + latinx + '%<br>' + '- Native American: ' + native + '%<br>' + '- Asian-American: ' + asian + '%')
-        })
+        //     countyCard.html('<h3>' + name + ', ' + stateName + '</h3><br><h5>Nonwhite: ' + percentage + '%</h5><br>' + '- Black: ' + black + '%<br>' + '- Hispanic or Latino: ' + latinx + '%<br>' + '- Native American: ' + native + '%<br>' + '- Asian-American: ' + asian + '%')
+        // })
         
         // Draws state borders on top of county map
         svg.selectAll('.state')
