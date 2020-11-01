@@ -54,55 +54,22 @@ var svg = d3.select("#plot")
 //function for everything below
 function leafPlot(state) {
     // read in data from api call
-    d3.json(`/by_state_name/${state}`).then(data => {
-        console.log(data);
+    d3.json(`/by_state_year/Oregon/${year}`).then(data => {
+        var layout = {
+            height: 600,
+            width: 800
+        }
+        let counties = data.map(d => d.county_name)
+        let percentages = data.map(d => d.nonwhite_pct)
 
-    //x axis
-    var x = d3.scaleBand()
-        .range([0, width])
-        .domain(data.map(function(d) {return d.county_name}))
-        .padding(1);
-
-    svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x))
-        .selectAll("text")
-            .attr("transfrom", "translate(-10,0)rotate(-90)")
-            .style("text-anchor", "end");
-
-    //add y axis
-    var y = d3.scaleLinear()
-        .domain([0, 100])
-        .range([height, 0]);
-
-    svg.append("g")
-        .call(d3.axisLeft(y));
-
-    //Lines
-    svg.selectAll("myline")
-        .data(data)
-        .enter()
-        .append("line")
-            .attr("x1", function(d) {return x(d.county_name);})
-            .attr("x2", function(d) {return x(d.county_name);})
-            .attr("y1", function(d) {return y(d.nonwhite_pct);})
-            .attr("y2", y(0))
-            .attr("stroke", "gray")
-
-    // circles
-    svg.selectAll("mycircle")
-        .data(data)
-        .enter()
-        .append("circle")
-            .attr("cx", function(d) {return x(d.county_name);})
-            .attr("cy", function(d) {return y(d.nonwhite_pct);})
-            .attr("r", "4")
-            .style("fill", "#69b3a2")
-            .attr("stroke", "black")
-    });
+        let data1 = [{
+            x: counties,
+            y: percentages 
+        }]
+        updatePlotly.newPlot('plotly', data1)
+    })
 }
-
-leafPlot('Oregon');
+//funtion to update plot (look at plotly 03-3)
 
 //state filter handler
 function stateHandler() {
@@ -118,5 +85,6 @@ function stateHandler() {
 
     //build plot with new state
     leafPlot(state);
+
 }
  d3.select("#states").on("change", stateHandler);
