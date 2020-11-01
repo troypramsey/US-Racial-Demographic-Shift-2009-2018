@@ -19,7 +19,7 @@
            <ul class="nav-justify-content-right">
              <li class="nav-item">
                 <a class="nav-link active" href="data.html">Data</a>
-                <a class="nav-link active" href="viz.html">Other Viz</a>
+                <a class="nav-link active" href={{url_for("viz")}}>Other Viz</a>
             </li>
             <li class="nav-item">
               <div id='dropdown-container'></div>
@@ -61,6 +61,12 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="col-12">
+            <div id="area"></div>
+          </div>
+        </div>
+
           <div class="row no-gutters" style=margin:20px>
               <div class="col">
                  <a href=""><IMG SRC="" border="0" alt=""></a>
@@ -95,30 +101,8 @@
        </div>
    </footer>
 
-<<<<<<< HEAD:project_two/index.html
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="./static/js/app.js"></script>
-    <script src="./static/js/maps.js"></script>
-    <script src="census2009.json"></script>
-    <script src="census2010.json"></script>
-    <script src="census2011.json"></script>
-    <script src="census2012.json"></script>
-    <script src="census2013.json"></script>
-    <script src="census2014.json"></script>
-    <script src="census2015.json"></script>
-    <script src="census2016.json"></script>
-    <script src="census2017.json"></script>
-    <script src="census2018.json"></script>
-=======
     <script src="https://d3js.org/d3.v5.min.js"></script>
    <script src="https://unpkg.com/topojson@3"></script>
    <script src='../static/js/app.js'></script>
->>>>>>> b9732372b9689c6155e0dbb63ba823c27aae7af4:templates/index_map_debug.html
   </body>
 </html>
