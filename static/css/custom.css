@@ -79,6 +79,12 @@ body{
   color: #FAFAFA;
 }
 
+#total-summary {
+  background-color: #4F4F4F;
+  color: #FAFAFA;
+  padding: 0;
+}
+
 .card {
   background-color: #4F4F4F;
   border-radius: 0px;

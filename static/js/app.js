@@ -73,10 +73,8 @@ function drawMap(year) {
         
         let popData = data
 
-        // Color scale function
-        let color = d3.scaleLinear()
-        .domain([1,30])
-        .range(['#FAFAFA', '#2DC200']);
+        // Call function to update summary card
+        updateSummary(popData)
 
         // Build tooltip with initial hidden visibility
         let tooltip = d3.select('body')
@@ -134,7 +132,11 @@ function drawMap(year) {
             catch (err) {
                 percentage = 1
             }
-            return color(percentage)
+            if (percentage > 50){
+                return 'limegreen'
+            }else {
+                return 'lightgray'
+            }
         })
         // Unhides tooltip on mouseover
         .on('mouseover', function(countyItem)  {
@@ -206,6 +208,49 @@ function drawMap(year) {
 
 }
 )
+}
+
+// Function updates map summary card
+function updateSummary(data) {
+    let summary = d3.select('#total-summary')
+        .classed('card-body', true)
+
+    let ratio = 0
+    let total = data.length
+
+    data.forEach(d => {
+        if (d.nonwhite_pct > 50) {
+            ratio += 1
+        }
+    })
+
+    summary.html(`Majority Nonwhite<br>${ratio}/${total}`)
+}
+
+function updateCountyCard(countyItem) {
+    let fips = countyItem.id
+            let county = popData.find((item) => {
+                return item.fips === fips
+            })
+            let name, percentage
+            try {
+                name = county.county_name
+                percentage = county.nonwhite_pct
+                black = county.black_pct
+                latinx = county.latinx_pct
+                native = county.native_pct
+                asian = county.asian_pct
+            }
+            catch (err) {
+                name = 'Data Missing From Census'
+                percentage = 'Unknown'
+                black = 'Unknown'
+                latinx = 'Unknown'
+                native = 'Unknown'
+                asian = 'Unknown'
+            }
+
+            countyCard.html('<h3>' + name + ', ' + stateName + '</h3><br><h5>Nonwhite: ' + percentage + '%</h5><br>' + '- Black: ' + black + '%<br>' + '- Hispanic or Latino: ' + latinx + '%<br>' + '- Native American: ' + native + '%<br>' + '- Asian-American: ' + asian + '%')
 }
 
     
