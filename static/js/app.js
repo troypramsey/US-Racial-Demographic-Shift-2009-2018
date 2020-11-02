@@ -56,7 +56,7 @@ function drawChart(year) {
             y: percentages,
         }]
 
-        Plotly.newPlot('plotly', data1)
+        Plotly.newPlot('plotly', data1, {responsive: true})
     })
 }
 
