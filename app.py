@@ -19,11 +19,11 @@ def col():
     
 @app.route("/")
 def index():
-    return render_template('index_map_debug.html')
+    return render_template('index.html')
 
 @app.route("/api")
 def api():
-    return render_template('data_map_debug.html')
+    return render_template('api.html')
 
 @app.route("/data")
 def data():
