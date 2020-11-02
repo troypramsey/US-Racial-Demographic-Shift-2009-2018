@@ -99,6 +99,10 @@ footer {
   padding:20px;
 }
 
+.fixed-bottom {
+  margin-top: 50px;
+}
+
 
 .design {
   padding-top: 10px;

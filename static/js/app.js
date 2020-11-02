@@ -23,7 +23,8 @@ let mapSelections = mapDropdown.selectAll('option')
     .text(d => d)
 
 // Draw initial map
-drawMap(defaultOption)
+drawMap(2009)
+buildSummaryChart()
 
 // Event listener for change in year
 mapDropdown.on('change', function() {
@@ -39,17 +40,6 @@ let svg = d3.select('#map')
     .attr("viewBox", `0 0 ${width} ${height}`)
     .attr('style', 'background-color: #4F4F4F;')
 
-<<<<<<< HEAD
-function drawChart(year) {
-    d3.json(`/by_state_year/Oregon/${year}`).then(data => {
-        var layout = {
-            height: 600,
-            width: 800
-        }
-
-        let counties = data.map(d => d.county_name)
-        let percentages = data.map(d => d.nonwhite_pct)
-=======
 ////////////////////////////////////////
 //    Start of Austin's code          //
 ////////////////////////////////////////
@@ -61,7 +51,6 @@ const stateNames = ["Alaska", "Alabama", "Arkansas", "Arizona", "California", "C
 "Missouri", "Mississippi", "Montana", "North Carolina", "North Dakota", "Nebraska", "New Hampshire", "New Jersey", "New Mexico", 
 "Nevada", "New York", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",  "Rhode Island", "South Carolina", "South Dakota", 
 "Tennessee", "Texas", "Utah", "Virginia", "Vermont", "Washington", "Wisconsin", "West Virginia", "Wyoming"]
->>>>>>> austin_branch
 
 const stateDropdown = d3.select('#stateDrop')
     .append('select')
@@ -77,18 +66,6 @@ let stateSelections = stateDropdown.selectAll('option')
     .attr('class', 'stateName')
     .text(d => d)
 
-<<<<<<< HEAD
-        let data1 = [{
-            x: counties,
-            y: percentages
-        }]
-
-        console.log(data)
-
-        Plotly.newPlot('plotly', data1)
-    })
-}
-=======
 
 //state filter handler
 function stateHandler() {
@@ -134,7 +111,6 @@ function drawChart(year) {
 ///////////////////////////
 //  End of Austin's code //
 ///////////////////////////
->>>>>>> austin_branch
 
 // DRAW MAP FUNCTION
 // Pass in year from dropdown
@@ -282,6 +258,54 @@ function drawMap(year) {
     })
 
 })}
+
+function buildSummaryChart(years) {
+    
+    let yearLabels = []
+    let yearRatios = []
+
+    d3.json(`/view`).then(data => {
+        data.forEach(d => {
+            yearLabels.push(d._id)
+            yearRatios.push(d.count)
+        })
+    })
+    
+
+    console.log(yearLabels)
+    console.log(yearRatios)
+
+    
+
+    let plotData = [{
+        x: yearLabels,
+        y: yearRatios,
+        line: {
+            color: 'limegreen'
+        }
+    }]
+
+    let layout= {
+        title: 'Majority Non-White (by Year)',
+        xaxis: {
+            type: 'date',
+            gridcolor: '#A7A7A7',
+            tickangle: -90
+        },
+        yaxis: {
+            gridcolor: '#A7A7A7'
+        },
+        plot_bgcolor:"gray",
+        paper_bgcolor:"#4f4f4f",
+        font: {
+            size: 18,
+            color: '#fafafa'
+          }
+  }
+
+    setTimeout(() => {Plotly.newPlot('plotly', plotData, layout)}, 1000)
+}
+
 
 // Function updates map summary card
 function updateSummary(data) {
