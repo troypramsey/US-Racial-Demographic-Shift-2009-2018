@@ -82,7 +82,6 @@ body{
 #total-summary {
   background-color: #4F4F4F;
   color: #FAFAFA;
-  padding: 0;
   overflow: auto;
   text-align: center;
 }
@@ -119,6 +118,8 @@ footer {
     .navbar-brand {
   margin-left: 10px;
   }
+<<<<<<< HEAD:project_two/custom.css
+=======
 
 #tooltip {
   height: 60px;
@@ -129,4 +130,5 @@ footer {
   border: 0px;
   border-radius: 8px;
   padding: 2px;
+>>>>>>> b9732372b9689c6155e0dbb63ba823c27aae7af4:static/css/custom.css
 }
