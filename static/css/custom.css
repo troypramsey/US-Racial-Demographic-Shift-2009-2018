@@ -49,6 +49,10 @@ body{
 
 /* body */
 
+h2 {
+  color: #fafafa;
+}
+
 .image1 {
   padding: 20px;
 }
@@ -91,6 +95,10 @@ body{
   border-radius: 0px;
 }
 
+.row{
+  margin-top: 30px;
+  margin-bottom: 30px
+}
 
 /* Footer */
 
@@ -122,17 +130,4 @@ footer {
     .navbar-brand {
   margin-left: 10px;
   }
-<<<<<<< HEAD:project_two/custom.css
-=======
-
-#tooltip {
-  height: 60px;
-  width: 200px;
-  font: 16px sans-serif;
-  pointer-events: none;
-  background: #fafafa;
-  border: 0px;
-  border-radius: 8px;
-  padding: 2px;
->>>>>>> b9732372b9689c6155e0dbb63ba823c27aae7af4:static/css/custom.css
 }

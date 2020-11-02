@@ -43,7 +43,6 @@ drawChart('Alaska', 2009)
 mapDropdown.on('change', function() {
     year = mapDropdown.node().value
     drawMap(year)
-    drawChart(year)
 })
 
 // Draw responsive canvas
@@ -100,13 +99,15 @@ function drawChart(state, year) {
         }]
 
         let layout= {
-            title: 'Majority Non-White (by Year)',
+            title: 'Top 10 Majority Nonwhite Counties by State and Year',
             xaxis: {
+                title: 'County Name',
                 type: 'category',
                 gridcolor: '#A7A7A7',
-                tickangle: 45
+                tickangle: -90
             },
             yaxis: {
+                title: 'Nonwhite %',
                 gridcolor: '#A7A7A7'
             },
             plot_bgcolor:"gray",
@@ -279,12 +280,6 @@ function buildSummaryChart(years) {
             yearRatios.push(d.count)
         })
     })
-    
-
-    console.log(yearLabels)
-    console.log(yearRatios)
-
-    
 
     let plotData = [{
         x: yearLabels,
@@ -295,13 +290,17 @@ function buildSummaryChart(years) {
     }]
 
     let layout= {
-        title: 'Majority Non-White (by Year)',
+        title: 'Majority Non-White (by Year, National)',
+        autosize: true,
         xaxis: {
             type: 'date',
+            title: 'Year',
             gridcolor: '#A7A7A7',
-            tickangle: -90
+            tickangle: 45,
+            automargin: true
         },
         yaxis: {
+            title: '# of Counties Majority Nonwhite',
             gridcolor: '#A7A7A7'
         },
         plot_bgcolor:"gray",
