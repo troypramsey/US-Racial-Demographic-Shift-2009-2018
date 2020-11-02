@@ -7,8 +7,8 @@ body{
 
 .mynav {
   background-image: url('../img/social.jpg');
-  background-color: blue;
-  /* background-size: cover; */
+  background-color: #888888;
+  background-size: cover;
 
   }
 
@@ -18,25 +18,8 @@ body{
     text-shadow: 3px 3px #777;
 }
 
-.mynav a {
-  
-  /* margin-right: 40px; */
+.mynav a { 
   color: linen !important;
-
-}
-
-/* .mynav a:hover {
-  background-color: #a38f74;
-
-} */
-
-.active a {
-  border-bottom: 2px solid #a38f74;
-}
-
-.dropdown-i {
-  color: #777 !important;
-
 }
 
 /* Page Header */
@@ -118,12 +101,6 @@ footer {
   color: #23c769;
 
 }
-@media only screen and (max-width: 1140px) {
-    .navbar-brand {
-  margin-left: 10px;
-  }
-<<<<<<< HEAD:project_two/custom.css
-=======
 
 #tooltip {
   height: 60px;
@@ -134,5 +111,8 @@ footer {
   border: 0px;
   border-radius: 8px;
   padding: 2px;
->>>>>>> b9732372b9689c6155e0dbb63ba823c27aae7af4:static/css/custom.css
 }
+@media only screen and (max-width: 1140px) {
+  .navbar-brand {
+    margin-left: 10px;
+  }}
