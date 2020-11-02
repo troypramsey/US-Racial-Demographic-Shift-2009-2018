@@ -22,10 +22,22 @@ let mapSelections = mapDropdown.selectAll('option')
     .attr('class', 'year')
     .text(d => d)
 
+let yearDropdown = d3.select('#stateYear')
+.append('select')
+.classed('form-inline form-control-lg', true)
+.attr('id', 'state_year_dropdown')
+
+let yearSelections = yearDropdown.selectAll('option')
+    .data(years)
+    .join('option')
+    .attr('value', d => d)
+    .attr('class', 'year')
+    .text(d => d)
+
 // Draw initial map
 drawMap(2009)
 buildSummaryChart()
-drawChart('Oregon', 2009)
+drawChart('Alaska', 2009)
 
 // Event listener for change in year
 mapDropdown.on('change', function() {
@@ -67,15 +79,12 @@ let stateSelections = stateDropdown.selectAll('option')
 
 
  stateDropdown.on("change", stateHandler);
+ yearDropdown.on('change', stateHandler)
 
 
 function drawChart(state, year) {
     d3.json(`/by_state_year/${state}/${year}`).then(data => {
-        var layout = {
-            height: 600,
-            width: 1000
-        }
-
+        
         let counties = data.map(d => d.county_name).sort((a, b) => b - a).slice(0, 10)
         let percentages = data.map(d => d.nonwhite_pct).sort((a, b) => b - a).slice(0, 10)
         
@@ -83,11 +92,32 @@ function drawChart(state, year) {
         let data1 = [{
             x: counties,
             y: percentages,
-            type: 'bar'
+            type: 'bar',
+            marker: {
+                color: 'limegreen'
+            }
              
         }]
 
-        Plotly.newPlot('area', data1)
+        let layout= {
+            title: 'Majority Non-White (by Year)',
+            xaxis: {
+                type: 'category',
+                gridcolor: '#A7A7A7',
+                tickangle: 45
+            },
+            yaxis: {
+                gridcolor: '#A7A7A7'
+            },
+            plot_bgcolor:"gray",
+            paper_bgcolor:"#4f4f4f",
+            font: {
+                size: 18,
+                color: '#fafafa'
+              }
+        }
+
+        Plotly.newPlot('area', data1, layout)
     })
 }
 
@@ -310,8 +340,9 @@ function stateHandler() {
 
     //select input value
     var state = stateDropdown.node().value;
+    let year = yearDropdown.node().value
     console.log(state);
 
     //build plot with new state
-    drawChart(state, 2018);
+    drawChart(state, year);
 }

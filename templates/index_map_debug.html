@@ -41,7 +41,13 @@
             <div id="map"></div>
           </div>
           <div class="col-3 card" id='card-container' style='border-left: 1px solid #FAFAFA'>
-            <div class='card-title'><div id='dropdown-container'></div>
+            <div class='row'>
+              <div class='col-6'>
+                <div class='card-body' id='dropdown-container'></div>
+              </div>
+              <div class='col-6'>
+                <div class='card-body' id='total-summary'></div>
+              </div>
             </div>
             <div class="card-body" id='county-card'>
                 Select a county to see detailed demographic info
@@ -56,9 +62,20 @@
               <div class='col-6' style='border: 1px solid #fafafa; padding: 0;'>
                 <div id='plotly'></div>
               </div>
-              <div class='col-6' style='text-align: center; border: #fafafa solid 1px'>
-                <div id="stateDrop"></div>
-                <div id="area"></div>
+              <div class='col-6' style='text-align: center; border: #fafafa solid 1px; padding: 0;'>
+                <div class='row'>
+                  <div class='col-12'>
+                    <div id="area"></div>
+                  </div>
+                </div>
+                <div class='row'>
+                  <div class='col-6'>
+                    <div id="stateDrop"></div>
+                  </div>
+                  <div class='col-6'>
+                    <div id='stateYear'></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
