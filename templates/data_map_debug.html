@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="custom.css">
+    <link rel="stylesheet" href="../static/css/custom.css">
     <script src="https://kit.fontawesome.com/735102e3ad.js" crossorigin="anonymous"></script>
     <title>Data</title>
 </head>
@@ -15,27 +15,21 @@
 <body>
   <section>
       <nav class="navbar navbar-expand- navbar-light bg-light mynav">
-        <a class="navbar-brand" href="index.html">Demographic Drift</a>
+        <a class="navbar-brand" href={{ url_for('index') }}>Demographic Drift</a>
            <ul class="nav-justify-content-right">
              <li class="nav-item">
-                <a class="nav-link active" href="index.html">Home</a>
-                <a class="nav-link active" href="viz.html">Other Viz</a>
+                <a class="nav-link active" href={{ url_for('index') }}>Home</a>
             </li>
           </ul>
         
        </nav>
     </section>
    <section>
-      <div class="container-fluid" style="margin:30px">
-        <table class="table-bordered table-hover table-striped">
-  
-        </table>
-
-      </div>
+      <h1>Here's some text!</h1>
 
 
   </section>
-  <footer>
+  <footer class='page-footer'>
       <div class="row text-center text-light">
             <div class="col-md-4 smed">
                 <a href="https://www.facebook.com/LatitudeFestival/" target="_blank"><i class="fab fa-facebook-square"></i></a>

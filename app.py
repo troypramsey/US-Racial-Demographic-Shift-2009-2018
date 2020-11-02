@@ -15,10 +15,9 @@ collection = db['json_data']
 def index():
     return render_template('index_map_debug.html')
 
-@app.route('/viz')
-def viz():
-    return render_template('viz.html')
-
+@app.route("/api")
+def api():
+    return render_template('data_map_debug.html')
 
 @app.route('/by_year/<year>', methods=['GET'])
 def year(year):
