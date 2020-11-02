@@ -4,6 +4,8 @@ let height = 500, width = 800
 // DROPDOWN
 // Values for building map dropdown
 // Default year on page initialization
+let defaultOption = 2009
+
 let years = [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
 
 // D3 to build map dropdown
@@ -20,20 +22,14 @@ let mapSelections = mapDropdown.selectAll('option')
     .attr('class', 'year')
     .text(d => d)
 
-// Build tooltip with initial hidden visibility
-let tooltip = d3.select('body')
-.append('div')
-.attr('id', 'tooltip')
-.attr('style', 'position: absolute; visibility: hidden; background: #4F4F4F; padding: 2px; text-align: center; width: 200px; color: #FAFAFA; opacity: 0.8; border-radius: 10px; border: .5px solid #FAFAFA')
-
 // Draw initial map
-drawMap(2009)
-// buildSummaryChart(years)
+drawMap(defaultOption)
 
 // Event listener for change in year
 mapDropdown.on('change', function() {
     year = mapDropdown.node().value
     drawMap(year)
+    drawChart(year)
 })
 
 // Draw responsive canvas
@@ -43,24 +39,66 @@ let svg = d3.select('#map')
     .attr("viewBox", `0 0 ${width} ${height}`)
     .attr('style', 'background-color: #4F4F4F;')
 
-<<<<<<< HEAD
+////////////////////////////////////////
+//    Start of Austin's code          //
+////////////////////////////////////////
+
+// D3 to build states dropdown
+const stateNames = ["Alaska", "Alabama", "Arkansas", "Arizona", "California", "Colorado", 
+"Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Iowa", "Idaho", 
+"Illinois", "Indiana", "Kansas", "Kentucky", "Louisiana", "Massachusetts", "Maryland", "Maine", "Michigan", "Minnesota", 
+"Missouri", "Mississippi", "Montana", "North Carolina", "North Dakota", "Nebraska", "New Hampshire", "New Jersey", "New Mexico", 
+"Nevada", "New York", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",  "Rhode Island", "South Carolina", "South Dakota", 
+"Tennessee", "Texas", "Utah", "Virginia", "Vermont", "Washington", "Wisconsin", "West Virginia", "Wyoming"]
+
+const stateDropdown = d3.select('#stateDrop')
+    .append('select')
+    .classed('form-inline form-control-lg', true)
+    .attr('id', 'states')
+
+// D3 to build selection for each state
+let stateSelections = stateDropdown.selectAll('option')
+    .data(stateNames)
+    .enter()
+    .append('option')
+    .attr('value', d => d)
+    .attr('class', 'stateName')
+    .text(d => d)
+
+
+//state filter handler
+function stateHandler() {
+    //prevent refreshing
+    d3.event.preventDefault();
+
+    //select input value
+    var state = d3.select("#states").node().value;
+    console.log(state);
+
+    //clear input
+    //d3.select("#state").node().value = "";
+
+    //build plot with new state
+    drawChart(year);
+
+}
+ d3.select("#states").on("change", stateHandler);
+
+
 function drawChart(year) {
     d3.json(`/by_state_year/Oregon/${year}`).then(data => {
         var layout = {
             height: 600,
-            width: 800
+            width: 1000
         }
 
-        let array = data.sort((a, b) => b-a)
+        let counties = data.map(d => d.county_name).sort((a, b) => b - a).slice(0, 10)
+        let percentages = data.map(d => d.nonwhite_pct).sort((a, b) => b - a).slice(0, 10)
         
-        console.log(data)
-        console.log(counties)
-        console.log(percentages)
 
         let data1 = [{
             x: counties,
             y: percentages,
-            title: "Top 10 Counties of Non-White Percent",
             type: 'bar'
              
         }]
@@ -68,8 +106,10 @@ function drawChart(year) {
         Plotly.newPlot('plotly', data1)
     })
 }
-=======
->>>>>>> 05561a6ee50c80456440918eaae2cbe6c8a6be0e
+
+///////////////////////////
+//  End of Austin's code //
+///////////////////////////
 
 // DRAW MAP FUNCTION
 // Pass in year from dropdown
@@ -86,6 +126,12 @@ function drawMap(year) {
         // Call function to update summary card
         updateSummary(popData)
 
+        // Build tooltip with initial hidden visibility
+        let tooltip = d3.select('body')
+        .append('div')
+        .attr('id', 'tooltip')
+        .attr('style', 'position: absolute; visibility: hidden; background: #4F4F4F; padding: 2px; text-align: center; width: 200px; color: #FAFAFA; opacity: 0.8; border-radius: 10px; border: .5px solid #FAFAFA')
+        .attr('html', '')
         
         // County card displays static county information on click
         let countyCard = d3.select('#county-card')
@@ -167,7 +213,9 @@ function drawMap(year) {
         // Re-hides tooltip on mouseout
         .on('mouseout', function (countyItem)  {
             tooltip.transition()
-                .style('visibility', 'hidden')    
+                .style('visibility', 'hidden')
+
+                
         })
         // Updates information in card on click
         .on('click', function(countyItem)  {
@@ -210,38 +258,6 @@ function drawMap(year) {
 
 })}
 
-// function buildSummaryChart(years) {
-    
-//     let yearLabel = []
-//     let yearRatio = []
-
-//     years.forEach(year => {
-//         yearLabel.push(year)
-//         d3.json(`/by_year/${year}`).then(data => {
-//             let ratio = 0
-//             data.forEach(d => {
-//                 if (d.nonwhite_pct > 50) {
-//                     ratio += 1
-//                 }
-//             })
-//             console.log(ratio)
-//             yearRatio.push(ratio)
-//         })
-//     })
-
-//     console.log(yearLabel)
-//     console.log(yearRatio)
-
-//     let plotData = [{
-//         x: yearLabel,
-//         y: yearRatio,
-//         kind: 'bar'
-//     }]
-
-//     Plotly.newPlot('plotly', plotData)
-// }
-
-
 // Function updates map summary card
 function updateSummary(data) {
     let summary = d3.select('#total-summary')
@@ -258,3 +274,6 @@ function updateSummary(data) {
 
     summary.html(`Majority Nonwhite<br>${ratio}/${total}`)
 }
+
+    
+    
