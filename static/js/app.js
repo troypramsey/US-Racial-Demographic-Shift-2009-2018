@@ -29,7 +29,7 @@ drawMap(defaultOption)
 mapDropdown.on('change', function() {
     year = mapDropdown.node().value
     drawMap(year)
-    // drawChart(year)
+    drawChart(year)
 })
 
 // Draw responsive canvas
@@ -39,27 +39,26 @@ let svg = d3.select('#map')
     .attr("viewBox", `0 0 ${width} ${height}`)
     .attr('style', 'background-color: #4F4F4F;')
 
-// function drawChart(year) {
-//     d3.json(`/by_state_year/Oregon/${year}`).then(data => {
-//         var layout = {
-//             height: 600,
-//             width: 800
-//         }
+function drawChart(year) {
+    d3.json(`/by_state_year/Kentucky/${year}`).then(data => {
+        var layout = {
+            height: 600,
+            width: 800
+        }
 
-//         let counties = data.map(d => d.county_name)
-//         let percentages = data.map(d => d.nonwhite_pct)
+        let counties = data.map(d => d.county_name)
+        let percentages = data.map(d => d.nonwhite_pct)
 
 
-//         let data1 = [{
-//             x: counties,
-//             y: percentages
-//         }]
+        let data1 = [{
+            x: counties,
+            y: percentages,
+            type: 'bar'
+        }]
 
-//         console.log(data)
-
-//         Plotly.newPlot('plotly', data1)
-//     })
-// }
+        Plotly.newPlot('plotly', data1)
+    })
+}
 
 // DRAW MAP FUNCTION
 // Pass in year from dropdown
