@@ -24,6 +24,7 @@ let mapSelections = mapDropdown.selectAll('option')
 
 // Draw initial map
 drawMap(defaultOption)
+drawChart(defaultOption)
 
 // Event listener for change in year
 mapDropdown.on('change', function() {
@@ -53,7 +54,6 @@ function drawChart(year) {
         let data1 = [{
             x: counties,
             y: percentages,
-            type: 'bar'
         }]
 
         Plotly.newPlot('plotly', data1)
@@ -80,7 +80,6 @@ function drawMap(year) {
         .append('div')
         .attr('id', 'tooltip')
         .attr('style', 'position: absolute; visibility: hidden; background: #4F4F4F; padding: 2px; text-align: center; width: 200px; color: #FAFAFA; opacity: 0.8; border-radius: 10px; border: .5px solid #FAFAFA')
-        .attr('html', '')
         
         // County card displays static county information on click
         let countyCard = d3.select('#county-card')
@@ -162,9 +161,7 @@ function drawMap(year) {
         // Re-hides tooltip on mouseout
         .on('mouseout', function (countyItem)  {
             tooltip.transition()
-                .style('visibility', 'hidden')
-
-                
+                .style('visibility', 'hidden')    
         })
         // Updates information in card on click
         .on('click', function(countyItem)  {
