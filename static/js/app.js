@@ -25,6 +25,7 @@ let mapSelections = mapDropdown.selectAll('option')
 // Draw initial map
 drawMap(2009)
 buildSummaryChart()
+drawChart('Oregon', 2009)
 
 // Event listener for change in year
 mapDropdown.on('change', function() {
@@ -39,10 +40,6 @@ let svg = d3.select('#map')
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox", `0 0 ${width} ${height}`)
     .attr('style', 'background-color: #4F4F4F;')
-
-////////////////////////////////////////
-//    Start of Austin's code          //
-////////////////////////////////////////
 
 // D3 to build states dropdown
 const stateNames = ["Alaska", "Alabama", "Arkansas", "Arizona", "California", "Colorado", 
@@ -67,27 +64,13 @@ let stateSelections = stateDropdown.selectAll('option')
     .text(d => d)
 
 
-//state filter handler
-function stateHandler() {
-    //prevent refreshing
-    d3.event.preventDefault();
-
-    //select input value
-    var state = d3.select("#states").node().value;
-    console.log(state);
-
-    //clear input
-    //d3.select("#state").node().value = "";
-
-    //build plot with new state
-    drawChart(year);
-
-}
- d3.select("#states").on("change", stateHandler);
 
 
-function drawChart(year) {
-    d3.json(`/by_state_year/Oregon/${year}`).then(data => {
+ stateDropdown.on("change", stateHandler);
+
+
+function drawChart(state, year) {
+    d3.json(`/by_state_year/${state}/${year}`).then(data => {
         var layout = {
             height: 600,
             width: 1000
@@ -104,13 +87,9 @@ function drawChart(year) {
              
         }]
 
-        Plotly.newPlot('plotly', data1)
+        Plotly.newPlot('area', data1)
     })
 }
-
-///////////////////////////
-//  End of Austin's code //
-///////////////////////////
 
 // DRAW MAP FUNCTION
 // Pass in year from dropdown
@@ -322,4 +301,17 @@ function updateSummary(data) {
     })
 
     summary.html(`Majority Nonwhite<br>${ratio}/${total}`)
+}
+
+//state filter handler
+function stateHandler() {
+    //prevent refreshing
+    d3.event.preventDefault();
+
+    //select input value
+    var state = stateDropdown.node().value;
+    console.log(state);
+
+    //build plot with new state
+    drawChart(state, 2018);
 }
