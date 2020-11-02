@@ -15,7 +15,7 @@
 <body>
   <section>
       <nav class="navbar navbar-expand- navbar-light bg-light mynav">
-        <a class="navbar-brand" href={{ url_for('index') }}>American Demographic Shifts 2009-2018</a>
+        <a class="navbar-brand" href={{ url_for('index') }}>US Demographic Shifts 2009-2018</a>
            <ul class='justify-content-between' style="list-style-type:none;">
              <li class="nav-item">
                 <a class="nav-link active" href={{ url_for('api') }}>API</a>
@@ -28,9 +28,9 @@
      <div class="container-sm" style=margin-top:30px>
        <div class="row" style=margin:30px>
          <div class="col-12">
-           <h2 class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing el	</h2>
+           <h2 class="text-center">US Counties Map</h2>
              <p class="text-center">
-               Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, non aperiam explicabo voluptas vel tempore, quos ipsum nisi dicta pariatur ad quasi unde necessitatibus, minus consectetur consequatur voluptatibus repellat debitis?
+               This map shows all US counties with available data from the 2009-2018 US census estimates. All county and state names are available on hover, and a full breakdown of racial and ethnic data is available on click. Select a year of data using the attached dropdown, and be sure to observe how the total number of majority nonwhite counties in the US changes from year to year.
               </p>
               <!-- <div id='dropdown-container'></div> -->
               
@@ -63,6 +63,9 @@
                 <div id='plotly'></div>
               </div>
             </div>
+            <p class=text-center>
+              This chart shows the steady increase in the total amount of majority nonwhite counties in the US by year.
+            </p>
             <div class='row'>
               <div class='col-9' style='border: 1px solid #fafafa; padding: 0;'>
                 <div id="area"></div>
@@ -76,6 +79,9 @@
                 </div>
               </div>
             </div>
+            <p class=text-center>
+              This chart shows the top ten highest proportioned majority nonwhite counties by selectable year and state.
+            </p>
           </div>
         </div>
           </div>
@@ -108,7 +114,7 @@
                <p class="design">Designed by Daren Hamilton</p>
             </div>
              <div class="col-md-4">
-               <h2>Racial Demographic Shifts by American County</h2>
+               <h2>US Demographic Shifts 2009-2018</h2>
              </div>
        </div>
    </footer>

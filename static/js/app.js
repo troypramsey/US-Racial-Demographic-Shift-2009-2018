@@ -100,15 +100,16 @@ function drawChart(state, year) {
 
         let layout= {
             title: 'Top 10 Majority Nonwhite Counties by State and Year',
+            autosize: true,
             xaxis: {
-                title: 'County Name',
                 type: 'category',
                 gridcolor: '#A7A7A7',
-                tickangle: -90
+                tickangle: 45,
+                automargin: true
             },
             yaxis: {
                 title: 'Nonwhite %',
-                gridcolor: '#A7A7A7'
+                gridcolor: '#A7A7A7',
             },
             plot_bgcolor:"gray",
             paper_bgcolor:"#4f4f4f",
@@ -118,7 +119,9 @@ function drawChart(state, year) {
               }
         }
 
-        Plotly.newPlot('area', data1, layout)
+        let config = {responsive: true}
+
+        Plotly.newPlot('area', data1, layout, config)
     })
 }
 
