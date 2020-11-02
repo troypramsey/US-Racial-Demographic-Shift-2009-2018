@@ -10,6 +10,11 @@ CORS(app)
 mongo = MongoClient('mongodb+srv://readuser:readpassword@groupproject2.ocbpa.mongodb.net/test?retryWrites=true&w=majority')
 db = mongo['static']
 collection = db['json_data']
+view_col = db['test']
+
+@app.route("/view")
+def col():
+    return jsonify(list(view_col.find({})))
 
 @app.route("/")
 def index():
@@ -25,19 +30,16 @@ def data():
 
 @app.route('/by_year/<year>', methods=['GET'])
 def year(year):
-    # return jsonify(list(collection.find({},{'year': int(year)})))
     results = list(collection.find({'year': int(year)}))
     return app.response_class(dumps(results), mimetype="application/json")
 
 @app.route('/by_state_name/<state_name>', methods=['GET'])
 def state_name(state_name):
-    # return jsonify(list(collection.find({},{'state_name': state_name})))
     results = list(collection.find({'state_name': state_name}))
     return app.response_class(dumps(results), mimetype="application/json")
 
 @app.route('/by_state_year/<state_name>/<year>', methods=['GET'])
 def state_year(state_name=None, year=None):
-    # return jsonify(list(collection.find({},{'state_name': state_name, 'year': int(year)})))
     results = list(collection.find({'state_name': state_name, 'year': int(year)}))
     return app.response_class(dumps(results), mimetype="application/json")
     
