@@ -15,11 +15,14 @@
 <body>
   <section>
       <nav class="navbar navbar-expand- navbar-light bg-light mynav">
-        <a class="navbar-brand" href={{ url_for('index') }}>Demographic Drift</a>
-           <ul class="nav-justify-content-right">
+        <a class="navbar-brand" href={{ url_for('index') }}>US Demographic Shifts 2009-2018</a>
+           <ul class="nav-justify-content-right" style="list-style-type:none;">
              <li class="nav-item">
                 <a class="nav-link active" href={{ url_for('index') }}>Home</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link active" href={{ url_for('api') }}>API</a>
+          </li>
           </ul>
         
        </nav>

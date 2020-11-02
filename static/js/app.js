@@ -1,11 +1,16 @@
 // Map size/margin values
 let height = 500, width = 800
 
-// DROPDOWN
-// Values for building map dropdown
-// Default year on page initialization
-let defaultOption = 2009
+// Draw responsive canvas
+let svg = d3.select('#map')
+    .append('svg')
+    .attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox", `0 0 ${width} ${height}`)
+    .attr('style', 'background-color: #4F4F4F;')
 
+// DROPDOWNS
+
+// Values to build map dropdown
 let years = [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
 
 // D3 to build map dropdown
@@ -22,6 +27,8 @@ let mapSelections = mapDropdown.selectAll('option')
     .attr('class', 'year')
     .text(d => d)
 
+// STATE/YEAR DROPDOWNS
+// D3 to build year dropdown
 let yearDropdown = d3.select('#stateYear')
 .append('select')
 .classed('form-inline form-control-lg', true)
@@ -34,25 +41,7 @@ let yearSelections = yearDropdown.selectAll('option')
     .attr('class', 'year')
     .text(d => d)
 
-// Draw initial map
-drawMap(2009)
-buildSummaryChart()
-drawChart('Alaska', 2009)
-
-// Event listener for change in year
-mapDropdown.on('change', function() {
-    year = mapDropdown.node().value
-    drawMap(year)
-})
-
-// Draw responsive canvas
-let svg = d3.select('#map')
-    .append('svg')
-    .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox", `0 0 ${width} ${height}`)
-    .attr('style', 'background-color: #4F4F4F;')
-
-// D3 to build states dropdown
+// State dropdown
 const stateNames = ["Alaska", "Alabama", "Arkansas", "Arizona", "California", "Colorado", 
 "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Iowa", "Idaho", 
 "Illinois", "Indiana", "Kansas", "Kentucky", "Louisiana", "Massachusetts", "Maryland", "Maine", "Michigan", "Minnesota", 
@@ -60,6 +49,7 @@ const stateNames = ["Alaska", "Alabama", "Arkansas", "Arizona", "California", "C
 "Nevada", "New York", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",  "Rhode Island", "South Carolina", "South Dakota", 
 "Tennessee", "Texas", "Utah", "Virginia", "Vermont", "Washington", "Wisconsin", "West Virginia", "Wyoming"]
 
+// D3 to build state dropdown
 const stateDropdown = d3.select('#stateDrop')
     .append('select')
     .classed('form-inline form-control-lg', true)
@@ -74,56 +64,15 @@ let stateSelections = stateDropdown.selectAll('option')
     .attr('class', 'stateName')
     .text(d => d)
 
+// Event listener for map year change
+mapDropdown.on('change', function() {
+    year = mapDropdown.node().value
+    drawMap(year)
+})
 
-
-
+// Event listeners for state/year chart
  stateDropdown.on("change", stateHandler);
  yearDropdown.on('change', stateHandler)
-
-
-function drawChart(state, year) {
-    d3.json(`/by_state_year/${state}/${year}`).then(data => {
-        
-        let counties = data.map(d => d.county_name).sort((a, b) => b - a).slice(0, 10)
-        let percentages = data.map(d => d.nonwhite_pct).sort((a, b) => b - a).slice(0, 10)
-        
-
-        let data1 = [{
-            x: counties,
-            y: percentages,
-            type: 'bar',
-            marker: {
-                color: 'limegreen'
-            }
-             
-        }]
-
-        let layout= {
-            title: 'Top 10 Majority Nonwhite Counties by State and Year',
-            autosize: true,
-            xaxis: {
-                type: 'category',
-                gridcolor: '#A7A7A7',
-                tickangle: 45,
-                automargin: true
-            },
-            yaxis: {
-                title: 'Nonwhite %',
-                gridcolor: '#A7A7A7',
-            },
-            plot_bgcolor:"gray",
-            paper_bgcolor:"#4f4f4f",
-            font: {
-                size: 18,
-                color: '#fafafa'
-              }
-        }
-
-        let config = {responsive: true}
-
-        Plotly.newPlot('area', data1, layout, config)
-    })
-}
 
 // DRAW MAP FUNCTION
 // Pass in year from dropdown
@@ -272,11 +221,13 @@ function drawMap(year) {
 
 })}
 
+// BUILD SUMMARY CHART
 function buildSummaryChart(years) {
     
     let yearLabels = []
     let yearRatios = []
 
+    // Push data values into arrays for building plot axes
     d3.json(`/view`).then(data => {
         data.forEach(d => {
             yearLabels.push(d._id)
@@ -284,6 +235,7 @@ function buildSummaryChart(years) {
         })
     })
 
+    // Build trace
     let plotData = [{
         x: yearLabels,
         y: yearRatios,
@@ -292,6 +244,7 @@ function buildSummaryChart(years) {
         }
     }]
 
+    // Set layout parameters
     let layout= {
         title: 'Majority Non-White (by Year, National)',
         autosize: true,
@@ -313,12 +266,12 @@ function buildSummaryChart(years) {
             color: '#fafafa'
           }
   }
-
+    // Set a slight time delay to ensure data comes in uncorrupted
     setTimeout(() => {Plotly.newPlot('plotly', plotData, layout)}, 1000)
 }
 
 
-// Function updates map summary card
+// UPDATE SUMMARY CARD NEXT TO MAP
 function updateSummary(data) {
     let summary = d3.select('#total-summary')
         .classed('card-body', true)
@@ -335,16 +288,75 @@ function updateSummary(data) {
     summary.html(`Majority Nonwhite<br>${ratio}/${total}`)
 }
 
-//state filter handler
+// BUILD STATE/YEAR CHART
+// Chart builder
+function drawChart(state, year) {
+    d3.json(`/by_state_year/${state}/${year}`).then(data => {
+        
+        // Set axes data sources
+        let counties = data.map(d => d.county_name).sort((a, b) => b - a).slice(0, 10)
+        let percentages = data.map(d => d.nonwhite_pct).sort((a, b) => b - a).slice(0, 10)
+        
+        // Build trace
+        let data1 = [{
+            x: counties,
+            y: percentages,
+            type: 'bar',
+            marker: {
+                color: 'limegreen'
+            }
+             
+        }]
+
+        // Set layout values
+        let layout= {
+            title: 'Top 10 Majority Nonwhite Counties by State and Year',
+            autosize: true,
+            xaxis: {
+                type: 'category',
+                gridcolor: '#A7A7A7',
+                tickangle: 45,
+                automargin: true
+            },
+            yaxis: {
+                title: 'Nonwhite %',
+                gridcolor: '#A7A7A7',
+            },
+            plot_bgcolor:"gray",
+            paper_bgcolor:"#4f4f4f",
+            font: {
+                size: 18,
+                color: '#fafafa'
+              }
+        }
+
+        let config = {responsive: true}
+
+        // Plot to the '#area' element in index
+        Plotly.newPlot('area', data1, layout, config)
+    })
+}
+
+// State/Year Chart Event Handler
+
 function stateHandler() {
-    //prevent refreshing
+    // Prevent refreshing
     d3.event.preventDefault();
 
-    //select input value
+    // Select dropdown values
     var state = stateDropdown.node().value;
     let year = yearDropdown.node().value
     console.log(state);
 
-    //build plot with new state
+    // Build plot with new state or year
     drawChart(state, year);
 }
+
+function init() {
+    // Draw initial map and charts
+drawMap(2009)
+buildSummaryChart()
+drawChart('Alaska', 2009)
+}
+
+init()
