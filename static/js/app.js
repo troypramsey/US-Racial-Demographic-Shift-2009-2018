@@ -2,22 +2,28 @@
 let height = 500, width = 800
 
 // DROPDOWN
+<<<<<<< HEAD
 // Values for building dropdown
 // let years = [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
 let years = [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
 
+=======
+// Values for building map dropdown
+>>>>>>> fbd998752515273ee5287faf112f2a0c541980de
 // Default year on page initialization
 // let defaultOption = 2009
 let defaultOption = 2011
 
-// D3 to build dropdown
-let dropdown = d3.select('#dropdown-container')
+let years = [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
+
+// D3 to build map dropdown
+const mapDropdown = d3.select('#dropdown-container')
     .append('select')
-    .classed('form-control form-control-lg', true)
+    .classed('form-inline form-control-lg', true)
     .attr('id', 'dropdown')
 
 // D3 to build selection for each year
-let selections = dropdown.selectAll('option')
+let mapSelections = mapDropdown.selectAll('option')
     .data(years)
     .join('option')
     .attr('value', d => d)
@@ -28,9 +34,10 @@ let selections = dropdown.selectAll('option')
 drawMap(defaultOption)
 
 // Event listener for change in year
-dropdown.on('change', function() {
-    year = dropdown.node().value
+mapDropdown.on('change', function() {
+    year = mapDropdown.node().value
     drawMap(year)
+    // drawChart(year)
 })
 
 // Draw responsive canvas
@@ -40,6 +47,28 @@ let svg = d3.select('#map')
     .attr("viewBox", `0 0 ${width} ${height}`)
     .attr('style', 'background-color: #4F4F4F;')
 
+// function drawChart(year) {
+//     d3.json(`/by_state_year/Oregon/${year}`).then(data => {
+//         var layout = {
+//             height: 600,
+//             width: 800
+//         }
+
+//         let counties = data.map(d => d.county_name)
+//         let percentages = data.map(d => d.nonwhite_pct)
+
+
+//         let data1 = [{
+//             x: counties,
+//             y: percentages
+//         }]
+
+//         console.log(data)
+
+//         Plotly.newPlot('plotly', data1)
+//     })
+// }
+
 // DRAW MAP FUNCTION
 // Pass in year from dropdown
 function drawMap(year) {
@@ -48,22 +77,14 @@ function drawMap(year) {
     d3.json('../static/js/zip_us.json').then(data => {
     let mapData = data
 
-    // Build data query using selected year
-
-    // dataQuery = /by_year/${year}
-
-    // let dataQuery = 'http://127.0.0.1:5000/by_year/' + year + '/'
-
     // Use query to pull in population data
     // d3.json(`/by_year/${year}`).then(data => {
     d3.json(`/by_zip_year/${year}`).then(data => {
         
         let popData = data
 
-        // Color scale function
-        let color = d3.scaleLinear()
-        .domain([1,30])
-        .range(['#FAFAFA', '#2DC200']);
+        // Call function to update summary card
+        updateSummary(popData)
 
         // Build tooltip with initial hidden visibility
         let tooltip = d3.select('body')
@@ -75,7 +96,7 @@ function drawMap(year) {
         // County card displays static county information on click
         let countyCard = d3.select('#county-card')
 
-        // Building zoom function
+        // Building zoom function (Credit: Vasco Asturiano: https://bl.ocks.org/vasturiano/f821fc73f08508a3beeb7014b2e4d50f)
         let zoom = d3.zoom()
             .scaleExtent([1, 8])
             .on('zoom', zoomed);
@@ -122,7 +143,11 @@ function drawMap(year) {
             catch (err) {
                 percentage = 1
             }
-            return color(percentage)
+            if (percentage > 50){
+                return 'limegreen'
+            }else {
+                return 'lightgray'
+            }
         })
         // Unhides tooltip on mouseover
         // .on('mouseover', function(countyItem)  {
@@ -192,8 +217,23 @@ function drawMap(year) {
 
     })
 
-}
-)
+})}
+
+// Function updates map summary card
+function updateSummary(data) {
+    let summary = d3.select('#total-summary')
+        .classed('card-body', true)
+
+    let ratio = 0
+    let total = data.length
+
+    data.forEach(d => {
+        if (d.nonwhite_pct > 50) {
+            ratio += 1
+        }
+    })
+
+    summary.html(`Majority Nonwhite<br>${ratio}/${total}`)
 }
 
     

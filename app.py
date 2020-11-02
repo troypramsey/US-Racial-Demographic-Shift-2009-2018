@@ -15,6 +15,10 @@ collection = db['json_data']
 def index():
     return render_template('index_map_debug.html')
 
+@app.route("/api")
+def api():
+    return render_template('data_map_debug.html')
+
 @app.route('/by_year/<year>', methods=['GET'])
 def year(year):
     results = list(collection.find({'year': int(year)}))
@@ -23,6 +27,11 @@ def year(year):
 @app.route('/by_state_name/<state_name>', methods=['GET'])
 def state_name(state_name):
     results = list(collection.find({'state_name': state_name}))
+    return app.response_class(dumps(results), mimetype="application/json")
+
+@app.route('/by_state_year/<state_name>/<year>', methods=['GET'])
+def state_year(state_name=None, year=None):
+    results = list(collection.find({'state_name': state_name, 'year': int(year)}))
     return app.response_class(dumps(results), mimetype="application/json")
 
 @app.route('/by_state_year/<state_name>/<year>', methods=['GET'])
