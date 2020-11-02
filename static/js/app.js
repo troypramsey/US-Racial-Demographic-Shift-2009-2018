@@ -40,20 +40,24 @@ let svg = d3.select('#map')
     .attr('style', 'background-color: #4F4F4F;')
 
 function drawChart(year) {
-    d3.json(`/by_state_year/Kentucky/${year}`).then(data => {
+    d3.json(`/by_state_year/Oregon/${year}`).then(data => {
         var layout = {
             height: 600,
             width: 800
         }
 
-        let counties = data.map(d => d.county_name)
-        let percentages = data.map(d => d.nonwhite_pct)
-
+        let array = data.sort((a, b) => b-a)
+        
+        console.log(data)
+        console.log(counties)
+        console.log(percentages)
 
         let data1 = [{
             x: counties,
             y: percentages,
+            title: "Top 10 Counties of Non-White Percent",
             type: 'bar'
+             
         }]
 
         Plotly.newPlot('plotly', data1)
