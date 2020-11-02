@@ -86,7 +86,7 @@ function drawMap(year) {
         // County card displays static county information on click
         let countyCard = d3.select('#county-card')
 
-        // Building zoom function
+        // Building zoom function (Credit: Vasco Asturiano: https://bl.ocks.org/vasturiano/f821fc73f08508a3beeb7014b2e4d50f)
         let zoom = d3.zoom()
             .scaleExtent([1, 8])
             .on('zoom', zoomed);
@@ -206,9 +206,7 @@ function drawMap(year) {
 
     })
 
-}
-)
-}
+})}
 
 // Function updates map summary card
 function updateSummary(data) {
@@ -225,32 +223,6 @@ function updateSummary(data) {
     })
 
     summary.html(`Majority Nonwhite<br>${ratio}/${total}`)
-}
-
-function updateCountyCard(countyItem) {
-    let fips = countyItem.id
-            let county = popData.find((item) => {
-                return item.fips === fips
-            })
-            let name, percentage
-            try {
-                name = county.county_name
-                percentage = county.nonwhite_pct
-                black = county.black_pct
-                latinx = county.latinx_pct
-                native = county.native_pct
-                asian = county.asian_pct
-            }
-            catch (err) {
-                name = 'Data Missing From Census'
-                percentage = 'Unknown'
-                black = 'Unknown'
-                latinx = 'Unknown'
-                native = 'Unknown'
-                asian = 'Unknown'
-            }
-
-            countyCard.html('<h3>' + name + ', ' + stateName + '</h3><br><h5>Nonwhite: ' + percentage + '%</h5><br>' + '- Black: ' + black + '%<br>' + '- Hispanic or Latino: ' + latinx + '%<br>' + '- Native American: ' + native + '%<br>' + '- Asian-American: ' + asian + '%')
 }
 
     

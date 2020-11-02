@@ -83,6 +83,8 @@ body{
   background-color: #4F4F4F;
   color: #FAFAFA;
   padding: 0;
+  overflow: auto;
+  text-align: center;
 }
 
 .card {
