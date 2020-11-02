@@ -74,7 +74,11 @@ body{
   border-radius: 0px;
 }
 
-
+.vis {
+  text-align: center;
+  border: 1px solid #fafafa;
+  padding: 0;
+}
 /* Footer */
 
 footer {
