@@ -28,7 +28,7 @@ let tooltip = d3.select('body')
 
 // Draw initial map
 drawMap(2009)
-// buildSummaryChart(years)
+buildSummaryChart()
 
 // Event listener for change in year
 mapDropdown.on('change', function() {
@@ -183,36 +183,52 @@ function drawMap(year) {
 
 })}
 
-// function buildSummaryChart(years) {
+function buildSummaryChart(years) {
     
-//     let yearLabel = []
-//     let yearRatio = []
+    let yearLabels = []
+    let yearRatios = []
 
-//     years.forEach(year => {
-//         yearLabel.push(year)
-//         d3.json(`/by_year/${year}`).then(data => {
-//             let ratio = 0
-//             data.forEach(d => {
-//                 if (d.nonwhite_pct > 50) {
-//                     ratio += 1
-//                 }
-//             })
-//             console.log(ratio)
-//             yearRatio.push(ratio)
-//         })
-//     })
+    d3.json(`/view`).then(data => {
+        data.forEach(d => {
+            yearLabels.push(d._id)
+            yearRatios.push(d.count)
+        })
+    })
+    
 
-//     console.log(yearLabel)
-//     console.log(yearRatio)
+    console.log(yearLabels)
+    console.log(yearRatios)
 
-//     let plotData = [{
-//         x: yearLabel,
-//         y: yearRatio,
-//         kind: 'bar'
-//     }]
+    
 
-//     Plotly.newPlot('plotly', plotData)
-// }
+    let plotData = [{
+        x: yearLabels,
+        y: yearRatios,
+        line: {
+            color: 'limegreen'
+        }
+    }]
+
+    let layout= {
+        title: 'Majority Non-White (by Year)',
+        xaxis: {
+            type: 'date',
+            gridcolor: '#A7A7A7',
+            tickangle: -90
+        },
+        yaxis: {
+            gridcolor: '#A7A7A7'
+        },
+        plot_bgcolor:"gray",
+        paper_bgcolor:"#4f4f4f",
+        font: {
+            size: 18,
+            color: '#fafafa'
+          }
+  }
+
+    setTimeout(() => {Plotly.newPlot('plotly', plotData, layout)}, 1000)
+}
 
 
 // Function updates map summary card
