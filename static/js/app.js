@@ -29,6 +29,7 @@ drawMap(defaultOption)
 mapDropdown.on('change', function() {
     year = mapDropdown.node().value
     drawMap(year)
+    drawChart(year)
 })
 
 // Draw responsive canvas
@@ -37,6 +38,103 @@ let svg = d3.select('#map')
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox", `0 0 ${width} ${height}`)
     .attr('style', 'background-color: #4F4F4F;')
+
+<<<<<<< HEAD
+function drawChart(year) {
+    d3.json(`/by_state_year/Oregon/${year}`).then(data => {
+        var layout = {
+            height: 600,
+            width: 800
+        }
+
+        let counties = data.map(d => d.county_name)
+        let percentages = data.map(d => d.nonwhite_pct)
+=======
+////////////////////////////////////////
+//    Start of Austin's code          //
+////////////////////////////////////////
+
+// D3 to build states dropdown
+const stateNames = ["Alaska", "Alabama", "Arkansas", "Arizona", "California", "Colorado", 
+"Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Iowa", "Idaho", 
+"Illinois", "Indiana", "Kansas", "Kentucky", "Louisiana", "Massachusetts", "Maryland", "Maine", "Michigan", "Minnesota", 
+"Missouri", "Mississippi", "Montana", "North Carolina", "North Dakota", "Nebraska", "New Hampshire", "New Jersey", "New Mexico", 
+"Nevada", "New York", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",  "Rhode Island", "South Carolina", "South Dakota", 
+"Tennessee", "Texas", "Utah", "Virginia", "Vermont", "Washington", "Wisconsin", "West Virginia", "Wyoming"]
+>>>>>>> austin_branch
+
+const stateDropdown = d3.select('#stateDrop')
+    .append('select')
+    .classed('form-inline form-control-lg', true)
+    .attr('id', 'states')
+
+// D3 to build selection for each state
+let stateSelections = stateDropdown.selectAll('option')
+    .data(stateNames)
+    .enter()
+    .append('option')
+    .attr('value', d => d)
+    .attr('class', 'stateName')
+    .text(d => d)
+
+<<<<<<< HEAD
+        let data1 = [{
+            x: counties,
+            y: percentages
+        }]
+
+        console.log(data)
+
+        Plotly.newPlot('plotly', data1)
+    })
+}
+=======
+
+//state filter handler
+function stateHandler() {
+    //prevent refreshing
+    d3.event.preventDefault();
+
+    //select input value
+    var state = d3.select("#states").node().value;
+    console.log(state);
+
+    //clear input
+    //d3.select("#state").node().value = "";
+
+    //build plot with new state
+    drawChart(year);
+
+}
+ d3.select("#states").on("change", stateHandler);
+
+
+function drawChart(year) {
+    d3.json(`/by_state_year/Oregon/${year}`).then(data => {
+        var layout = {
+            height: 600,
+            width: 1000
+        }
+
+        let counties = data.map(d => d.county_name).sort((a, b) => b - a).slice(0, 10)
+        let percentages = data.map(d => d.nonwhite_pct).sort((a, b) => b - a).slice(0, 10)
+        
+
+        let data1 = [{
+            x: counties,
+            y: percentages,
+            type: 'bar'
+             
+        }]
+
+        Plotly.newPlot('plotly', data1)
+    })
+}
+
+///////////////////////////
+//  End of Austin's code //
+///////////////////////////
+>>>>>>> austin_branch
 
 // DRAW MAP FUNCTION
 // Pass in year from dropdown
@@ -50,10 +148,8 @@ function drawMap(year) {
         
         let popData = data
 
-        // Color scale function
-        let color = d3.scaleLinear()
-        .domain([1,30])
-        .range(['#FAFAFA', '#2DC200']);
+        // Call function to update summary card
+        updateSummary(popData)
 
         // Build tooltip with initial hidden visibility
         let tooltip = d3.select('body')
@@ -65,7 +161,7 @@ function drawMap(year) {
         // County card displays static county information on click
         let countyCard = d3.select('#county-card')
 
-        // Building zoom function
+        // Building zoom function (Credit: Vasco Asturiano: https://bl.ocks.org/vasturiano/f821fc73f08508a3beeb7014b2e4d50f)
         let zoom = d3.zoom()
             .scaleExtent([1, 8])
             .on('zoom', zoomed);
@@ -111,7 +207,11 @@ function drawMap(year) {
             catch (err) {
                 percentage = 1
             }
-            return color(percentage)
+            if (percentage > 50){
+                return 'limegreen'
+            }else {
+                return 'lightgray'
+            }
         })
         // Unhides tooltip on mouseover
         .on('mouseover', function(countyItem)  {
@@ -181,9 +281,21 @@ function drawMap(year) {
 
     })
 
-}
-)
-}
+})}
 
-    
-    
+// Function updates map summary card
+function updateSummary(data) {
+    let summary = d3.select('#total-summary')
+        .classed('card-body', true)
+
+    let ratio = 0
+    let total = data.length
+
+    data.forEach(d => {
+        if (d.nonwhite_pct > 50) {
+            ratio += 1
+        }
+    })
+
+    summary.html(`Majority Nonwhite<br>${ratio}/${total}`)
+}
