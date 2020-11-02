@@ -19,6 +19,11 @@ def index():
 def api():
     return render_template('data_map_debug.html')
 
+@app.route("/data")
+def data():
+    return list(collection.find({}))
+    return app.response_class(dumps(results), mimetype="applcation/json")
+
 @app.route('/by_year/<year>', methods=['GET'])
 def year(year):
     results = list(collection.find({'year': int(year)}))
