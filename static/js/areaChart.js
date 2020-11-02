@@ -42,7 +42,7 @@ var margins = {top: 30, right: 0, bottom: 30, left: 50},
     height = 400 - margins.top - margins.bottom;
 
 //append svg object to body on page
-var svg = d3.select("#plot")
+var svg = d3.select("#plotly")
     .append("svg")
     .attr("width", width + margins.left + margins.right)
     .attr("height", height + margins.top + margins.bottom)
@@ -50,6 +50,25 @@ var svg = d3.select("#plot")
     .attr("transform",
           "translate(" + margins.left + "," + margins.top + ")");
 
+
+
+//state filter handler
+function stateHandler() {
+    //prevent refreshing
+    d3.event.preventDefault();
+
+    //select input value
+    var state = d3.select("#states").node().value;
+    console.log(state);
+
+    //clear input
+    d3.select("#state").node().value = "";
+
+    //build plot with new state
+    leafPlot(state);
+
+}
+ d3.select("#states").on("change", stateHandler);
 
 //function for everything below
 function leafPlot(state) {
@@ -69,22 +88,3 @@ function leafPlot(state) {
         updatePlotly.newPlot('plotly', data1)
     })
 }
-//funtion to update plot (look at plotly 03-3)
-
-//state filter handler
-function stateHandler() {
-    //prevent refreshing
-    d3.event.preventDefault();
-
-    //select input value
-    var state = d3.select("#states").node().value;
-    console.log(state);
-
-    //clear input
-    d3.select("#state").node().value = "";
-
-    //build plot with new state
-    leafPlot(state);
-
-}
- d3.select("#states").on("change", stateHandler);
