@@ -33,11 +33,6 @@ def state_name(state_name):
 def state_year(state_name=None, year=None):
     results = list(collection.find({'state_name': state_name, 'year': int(year)}))
     return app.response_class(dumps(results), mimetype="application/json")
-
-@app.route('/by_state_year/<state_name>/<year>', methods=['GET'])
-def state_year(state_name=None, year=None):
-    results = list(collection.find({'state_name': state_name, 'year': int(year)}))
-    return app.response_class(dumps(results), mimetype="application/json")
     
 if __name__ == '__main__':
     app.run(debug=True)
