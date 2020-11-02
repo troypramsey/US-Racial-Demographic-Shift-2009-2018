@@ -50,10 +50,9 @@ function drawChart(year) {
         let counties = data.map(d => d.county_name)
         let percentages = data.map(d => d.nonwhite_pct)
 
-
         let data1 = [{
             x: counties,
-            y: percentages,
+            y: percentages
         }]
 
         Plotly.newPlot('plotly', data1, {responsive: true})
@@ -220,6 +219,3 @@ function updateSummary(data) {
 
     summary.html(`Majority Nonwhite<br>${ratio}/${total}`)
 }
-
-    
-    

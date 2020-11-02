@@ -19,18 +19,25 @@ def index():
 def api():
     return render_template('data_map_debug.html')
 
+@app.route("/data")
+def data():
+    return jsonify(list(collection.find({}, {'_id':0})))
+
 @app.route('/by_year/<year>', methods=['GET'])
 def year(year):
-    results = list(collection.find({'year':int(year)}))
+    # return jsonify(list(collection.find({},{'year': int(year)})))
+    results = list(collection.find({'year': int(year)}))
     return app.response_class(dumps(results), mimetype="application/json")
 
 @app.route('/by_state_name/<state_name>', methods=['GET'])
 def state_name(state_name):
-    results = list(collection.find({'state_name':state_name}))
+    # return jsonify(list(collection.find({},{'state_name': state_name})))
+    results = list(collection.find({'state_name': state_name}))
     return app.response_class(dumps(results), mimetype="application/json")
 
 @app.route('/by_state_year/<state_name>/<year>', methods=['GET'])
 def state_year(state_name=None, year=None):
+    # return jsonify(list(collection.find({},{'state_name': state_name, 'year': int(year)})))
     results = list(collection.find({'state_name': state_name, 'year': int(year)}))
     return app.response_class(dumps(results), mimetype="application/json")
     
