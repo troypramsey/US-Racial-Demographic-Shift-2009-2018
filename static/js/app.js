@@ -349,7 +349,6 @@ function stateHandler() {
     // Select dropdown values
     var state = stateDropdown.node().value;
     let year = yearDropdown.node().value
-    console.log(state);
 
     // Build plot with new state or year
     drawChart(state, year);

@@ -13,6 +13,9 @@ We chose to use two types of visualizations:
 - A responsive map built entirely in base D3<br><img src='img/finalmap.png' width='400'><br>
 - Two charts in Plotly.js, one static line chart to show raw national change over time...<br><img src='img/finalline.png' width='400'><br> ...and one interactive bar chart to give access to the top ten highest proportion nonwhite majority counties by any given state or year.<br><img src='img/finalbar.png' width='400'><br>
 
+### Results
+Over the course of ten years, 64 counties in the US became majority nonwhite on top of the counties that already were. Overall, by the year 2018, 11% of all counties in the US were majority nonwhite, a 2% increase from 2009. We did not look at increases in *already* majority nonwhite counties, so this number does not represent an overall percentage increase in demographic diversity country-wide. Rather, this shows a *geographic* percentage increase and illustrates changes in demographic distribution.
+
 ### How to Run the App
 - Pull down the repository [here](https://github.com/troypramsey/group_project2).
 - All necessary Python modules are available in the requirements.txt file. We recommend using pip to install all of them into a new virtual environment, as some modules are inaccessible to Conda.
