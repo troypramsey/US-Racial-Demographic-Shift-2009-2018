@@ -78,6 +78,10 @@ h2, p, li {
   opacity: 0.5;
 }
 
+.dropdown-menu {
+  width: 100%;
+}
+
 #county-card {
   background-color: #4F4F4F;
   color: #FAFAFA;

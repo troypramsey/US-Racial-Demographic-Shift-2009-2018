@@ -64,10 +64,14 @@ let stateSelections = stateDropdown.selectAll('option')
     .attr('class', 'stateName')
     .text(d => d)
 
+// County card displays static county information on click
+let countyCard = d3.select('#county-card')
+
 // Event listener for map year change
 mapDropdown.on('change', function() {
     year = mapDropdown.node().value
     drawMap(year)
+    countyCard.html('Select a county to see detailed demographic info')
 })
 
 // Event listeners for state/year chart
@@ -95,9 +99,6 @@ function drawMap(year) {
         .attr('id', 'tooltip')
         .attr('style', 'position: absolute; visibility: hidden; background: #4F4F4F; padding: 2px; text-align: center; width: 200px; color: #FAFAFA; opacity: 0.8; border-radius: 10px; border: .5px solid #FAFAFA')
         .attr('html', '')
-        
-        // County card displays static county information on click
-        let countyCard = d3.select('#county-card')
 
         // Building zoom function (Credit: Vasco Asturiano: https://bl.ocks.org/vasturiano/f821fc73f08508a3beeb7014b2e4d50f)
         let zoom = d3.zoom()
@@ -266,15 +267,17 @@ function buildSummaryChart(years) {
             color: '#fafafa'
           }
   }
+
+    let config = {responsive: true}
+
     // Set a slight time delay to ensure data comes in uncorrupted
-    setTimeout(() => {Plotly.newPlot('plotly', plotData, layout)}, 1000)
+    setTimeout(() => {Plotly.newPlot('plotly', plotData, layout, config)}, 1000)
 }
 
 
 // UPDATE SUMMARY CARD NEXT TO MAP
 function updateSummary(data) {
     let summary = d3.select('#total-summary')
-        .classed('card-body', true)
 
     let ratio = 0
     let total = data.length
