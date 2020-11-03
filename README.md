@@ -4,12 +4,14 @@
 After some exposure to the US Census module in Python, we wanted to somehow combine census data with JavaScript to build interesting maps and charts. In exploring the data, we discovered various changes in demographic proportions across multiple US counties. We've always *heard* that the US was becoming more diverse year on year, but we wanted to see it, specifically whether that diversification was stretching across all of the country's geography.
 
 ### Data
-Our data was sourced calling the US Census Bureau API using the Census module in Python. We pulled in data for the five major racial/ethnic categories, determined each category's proportion of a given county's population, and saved each year's worth of data into a dataframe using Pandas. We exported these dataframes into JSON objects and loaded them into MongoDB. We then deployed the objects to a Mongo cluster for cloud access to data so as to mitigate the need to recreate all files locally on a given machine.
+Our data was sourced calling the US Census Bureau API using the Census module in Python. We pulled in data for the five major racial/ethnic categories, determined each category's proportion of a given county's population, and saved each year's worth of data into a dataframe using Pandas. We exported these dataframes into JSON objects and loaded them into MongoDB. <br><img src='img/MongoDB_Cluster.PNG' width='400'><br> 
+We then deployed the objects to a Mongo cluster for cloud access to data so as to mitigate the need to recreate all files locally on a given machine. We used indexing to ensure that each county in each year was its only single document, rather than needing to return all bulk data with our calls.<br><img src='img/MongoDB_Indexes.PNG' width='400'><br>
+In building our visualizations, we noticed that the asynchronous nature of JavaScript kept outpacing API calls, where our visualizations construct themselves without the requisite data! This was handled by creating aggregations through MongoDB pipelines in order to create *views* of the data we needed.<br><img src='img/Atlas_Compass_Pipeline.PNG' width='400'><br>
 
 ### Visualizations
 We chose to use two types of visualizations:
-- A responsive map built entirely in base D3
-- Two charts in Plotly.js, one static line chart to show raw national change over time, and one interactive bar chart to give access to the top ten highest proportion nonwhite majority counties by any given state or year.
+- A responsive map built entirely in base D3<br><img src='img/finalmap.png' width='400'><br>
+- Two charts in Plotly.js, one static line chart to show raw national change over time...<br><img src='img/finalline.png' width='400'><br> ...and one interactive bar chart to give access to the top ten highest proportion nonwhite majority counties by any given state or year.<br><img src='img/finalbar.png' width='400'><br>
 
 ### How to Run the App
 - Pull down the repository [here](https://github.com/troypramsey/group_project2).
